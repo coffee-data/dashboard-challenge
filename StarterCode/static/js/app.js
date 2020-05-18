@@ -1,6 +1,6 @@
-// Read in json data
+// Read in json data using async
 (async function(){
-    var data = await d3.json("/StarterCode/samples.json").catch(function(error) {
+    var data = await d3.json("./data/samples.json").catch(function(error) {
       console.log(error);
     });
     console.log(data);
