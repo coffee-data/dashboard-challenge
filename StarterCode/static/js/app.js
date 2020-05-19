@@ -7,16 +7,17 @@ function unpack(rows, index) {
 
 // This filter works!
 function filteredIds(obj) {
-  return parseInt(obj.id) === idSelect;
+  return parseInt(obj.id) == idSelect;
+  console.log(idSelect);
 };
 
 // This is the event handler for changing id names.
-nameSelect = d3.select("#selDataset");
+dropdown = d3.select("#selDataset");
 
 // Default value for id name
 var idSelect = 940;
 
-nameSelect.on("change", function() {
+dropdown.on("change", function() {
   console.log("This thing was changed!");
   idSelect = d3.event.target.value;
   console.log(idSelect);
@@ -66,6 +67,7 @@ slicedSampleValues = sortedSample[0].sample_values.slice(0,10);
 slicedIds = sortedSample[0].otu_ids.slice(0,10);
 slicedLabels = sortedSample[0].otu_labels.slice(0,10);
 
+function init() {
 // Graph the default selection
 var trace1 = {
   x: slicedSampleValues,
@@ -83,16 +85,63 @@ var trace1 = {
 var plotData = [trace1];
 
 var layout = {
-  title: "'Bar' Chart",
+  title: `Name: ${idSelect}`,
   yaxis: {
     automargin: true
   }
 };
 
 Plotly.newPlot("plot", plotData, layout);
+}
 
+// On change to the DOM, call optionChanged()
+d3.selectAll("#selDataset").on("change", optionChanged);
 
+function optionChanged() {
+  // Function called by DOM changes
+  dropdown = d3.select("#selDataset");
+  // Assign the value of the dropdown menu option to a variable
+  idSelect = dropdown.property("value");
+  console.log(idSelect);
+  // Assign filtered object
+  filteredSample = sampleData.filter(filteredIds);
+  console.log(filteredSample);
+  // Sort the filtered sample and assign
+  sortedSample = filteredSample.sort((a, b) => (b.sample_values - a.sample_values));
 
+  // Assign new values to slices
+  slicedSampleValues = sortedSample[0].sample_values.slice(0,10);
+  slicedIds = sortedSample[0].otu_ids.slice(0,10);
+  slicedLabels = sortedSample[0].otu_labels.slice(0,10);
+
+  var trace = {
+        x: slicedSampleValues,
+        y: slicedIds.map(d => `OTU ${d}`),
+        text: slicedLabels,
+        type: "bar",
+        orientation: 'h',
+        transforms: [{
+          type: 'sort',
+          target: 'y',
+          order: 'descending'
+        }]
+  };
+
+  var plotData = [trace];
+
+  var layout = {
+    title: `Name: ${idSelect}`,
+    yaxis: {
+      automargin: true
+    }
+  };
+
+  console.log(plotData);
+  Plotly.newPlot("plot", plotData, layout);
+  
+}
+
+init();
 })()
 
 // sampleData.forEach(function(d) {
