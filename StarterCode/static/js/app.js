@@ -7,8 +7,20 @@ function unpack(rows, index) {
 
 // This filter works!
 function filteredIds(obj) {
-  return parseInt(obj.id) === 940;
+  return parseInt(obj.id) === idSelect;
 };
+
+// This is the event handler for changing id names.
+nameSelect = d3.select("#selDataset");
+
+// Default value for id name
+var idSelect = 940;
+
+nameSelect.on("change", function() {
+  console.log("This thing was changed!");
+  idSelect = d3.event.target.value;
+  console.log(idSelect);
+});
 
 // // Try this for selection
 // function filteredIds(obj, sel) {
@@ -53,6 +65,31 @@ sortedSample = filteredSample.sort((a, b) => (b.sample_values - a.sample_values)
 slicedSampleValues = sortedSample[0].sample_values.slice(0,10);
 slicedIds = sortedSample[0].otu_ids.slice(0,10);
 slicedLabels = sortedSample[0].otu_labels.slice(0,10);
+
+// Graph the default selection
+var trace1 = {
+  x: slicedSampleValues,
+  y: slicedIds.map(d => `OTU ${d}`),
+  text: slicedLabels,
+  type: "bar",
+  orientation: 'h',
+  transforms: [{
+    type: 'sort',
+    target: 'y',
+    order: 'descending'
+  }]
+};
+
+var plotData = [trace1];
+
+var layout = {
+  title: "'Bar' Chart",
+  yaxis: {
+    automargin: true
+  }
+};
+
+Plotly.newPlot("plot", plotData, layout);
 
 
 
