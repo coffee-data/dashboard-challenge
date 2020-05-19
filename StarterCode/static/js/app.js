@@ -1,10 +1,3 @@
-// Create unpack function
-function unpack(rows, index) {
-  return rows.map(function(row) {
-    return row[index];
-  });
-}
-
 // Function for updating metadata
 function update(data) {
 
@@ -25,7 +18,7 @@ function update(data) {
 selection.exit().remove();
 }
 
-// This filter works!
+// Filter for selection
 function filteredIds(obj) {
   return parseInt(obj.id) == idSelect;
   console.log(idSelect);
@@ -239,95 +232,4 @@ function optionChanged() {
 }
 
 init();
-})()
-
-// sampleData.forEach(function(d) {
-//   console.log(d.sample_values);
-//   console.log(d.otu_ids);
-//   console.log(d.otu_labels);
-// })
-
-// Map Sample Values
-// sampleValues = sampleData.map(function(d) {
-//   return d.sample_values;
-// });
-
-// // Map OTU Ids
-// sampleIds = sampleData.map(function(d) {
-//   return d.otu_ids;
-// });
-
-// // Map OTU Labels
-// sampleLabels = sampleData.map(function(d) {
-//   return d.otu_labels;
-// });
-
-
-
-
-
-
-
-
-
-// // Create async function for reading json
-// (async function(){
-//     var bellyData = await d3.json("./data/samples.json").catch(function(error) {
-//       console.log(error);
-//     });
-//     console.log(bellyData);
-   
-//     sampleValues = bellyData.samples.map(function(d) {
-//       return d.sample_values;
-//     });
-//     console.log(sampleValues);
-
-//     labels = bellyData.samples.map(function(d) {
-//       return d.otu_ids;
-//     });
-
-//     hoverText = bellyData.samples.map(function(d) {
-//       return d.otu_labels;
-//     });
-
-//     var trace1 = {
-//       x: labels,
-//       y: sampleValues,
-//       type: "bar"
-//     };
-
-//     var barData = [trace1];
-
-//     var layout = {
-//       title: "'Bar' Chart"
-//     };
-
-//     Plotly.newPlot("plot", barData, layout);
-
-//   })()
-
-
-
-
-  // var metadata = bellyData.metadata;
-  // console.log(`Metadata`);
-  // console.log(bellyData.metadata);
-
-  // var names = bellyData.names;
-  // console.log(`Data Names`);
-  // console.log(bellyData.names);
-
-  // var sampleLook = bellyData.sample;
-  // console.log(`Samples`);
-  // console.log(bellyData.sample);
-
-  // // var sampleValues = bellyData.samples.forEach(function(data) {
-  // //   console.log(data.sample_values);
-  // // })
-
-  // var sampleValues = bellyData.samples.map(d => d.sample_values);
-  // console.log(sampleValues);
-
-  // // var sampleIds = bellyData.samples.forEach(function(data) {
-  // //   console.log(data.otu_ids);
-  // // })
+})();
